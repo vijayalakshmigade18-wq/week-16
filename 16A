@@ -1,0 +1,73 @@
+//Maven Dependencies (pom.xml)
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>6.1.10</version>
+    </dependency>
+    <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>6.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
+    </dependency>
+</dependencies>
+
+//Controller Class
+package com.example.controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
+public class HomeController {
+
+    @RequestMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("message",
+                "Welcome to Spring MVC Framework!");
+        return "home";
+    }
+}
+//View (home.jsp)
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<html>
+<head>
+    <title>Spring MVC</title>
+</head>
+<body>
+<h2>${message}</h2>
+</body>
+</html>
+//Spring MVC Configuration
+package com.example.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+@Configuration
+@EnableWebMvc
+public class WebConfig {
+
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver resolver =  new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
+}
+//index.jsp
+<html>
+<body>
+<a href="home">Open Spring MVC Page</a>
+</body>
+</html>
+
